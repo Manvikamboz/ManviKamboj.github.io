@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manvi Kamboj Resume</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg1: #f0f9ff;
+      --bg2: #a8dadc;
+      --bg3: #d8f3dc;
+      --bg-color: #f8fcff;
+      --text-color: #000;
+      --section-bg: white;
+      --section-border: #aadcf5;
+      --section-title-bg: #d2f0fc;
+      --section-title-border: #4ca1af;
+      --quote-bg: #e6f7ff;
+      --quote-border: #00a8cc;
+      --title-text: #111827;
+      --section-h2-bg: #fcefee;
+    }
+
+    body.dark-mode {
+      --bg1: #1d3557;
+      --bg2: #457b9d;
+      --bg3: #0a192f;
+      --bg-color: #0f1117;
+      --text-color: #f5f5f5;
+      --section-bg: #1b1f2a;
+      --section-border: #2e3440;
+      --section-title-bg: #252b36;
+      --section-title-border: #3b82f6;
+      --quote-bg: #202430;
+      --quote-border: #60a5fa;
+      --title-text: #f3f4f6;
+      --section-h2-bg: #333c4a;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: all 0.5s ease;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+      background-size: 400% 400%;
+      animation: moveBg 15s ease infinite;
+    }
+
+    @keyframes moveBg {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: var(--section-bg);
+      border: 5px solid var(--section-border);
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      border-radius: 12px;
+      transition: background 0.5s ease, border 0.5s ease;
+    }
+
+    .title {
+      text-align: center;
+      background-color: var(--section-title-bg);
+      padding: 15px;
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--title-text);
+      border: 2px dashed var(--section-title-border);
+      border-radius: 8px;
+    }
+
+    .flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .left, .right {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+      transition: transform 0.3s;
+    }
+
+    .section:hover {
+      transform: scale(1.01);
+    }
+
+    .section h2 {
+      background: var(--section-h2-bg);
+      padding: 10px;
+      border-left: 5px solid #ff6f91;
+      font-size: 18px;
+      color: var(--text-color);
+    }
+
+    .section p, .section ul {
+      padding: 10px;
+      line-height: 1.6;
+    }
+
+  .profile {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: nowrap;
+}
+
+
+
+  .profile img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #faa6ff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  object-fit: cover;
+  margin-top: 5px; 
+}
+
+    .quote {
+      background: var(--quote-bg);
+      padding: 10px;
+      border-left: 4px solid var(--quote-border);
+      font-style: italic;
+      margin-top: 10px;
+      border-radius: 6px;
+    }
+
+    ul {
+      list-style: square;
+      margin: 0;
+    }
+
+    .skills, .language, .expertise {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skills div, .language div, .expertise div {
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .skills div:hover, .expertise div:hover {
+      background: #ffe4f0;
+      transform: scale(1.05);
+    }
+
+    .lang-active { background: #ef4444; color: white; }
+    .lang-passive { background: #3b82f6; color: white; }
+
+    .toggle-btn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .toggle-icon {
+      width: 40px;
+      height: 40px;
+      transition: transform 0.4s ease;
+    }
+    .skills div, .language div, .expertise div {
+  background: var(--chip-bg, #f1f1f1);
+  color: var(--chip-text, #111);
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.3s;
+}
+
+body.dark-mode .skills div,
+body.dark-mode .language div,
+body.dark-mode .expertise div {
+  --chip-bg: #2c3440;
+  --chip-text: #f3f4f6;
+}
+
+.language div:hover {
+  background: #ffe4f0;
+  transform: scale(1.05);
+}
+
+  </style>
+</head>
+<body>
+  <button class="toggle-btn" onclick="toggleDarkMode()">
+    <img class="toggle-icon" id="mode-icon" src="https://img.icons8.com/ios-glyphs/30/ffffff/moon-symbol.png" alt="Toggle Dark Mode">
+  </button>
+
+  <div class="container fade-in">
+    <div class="title scroll-reveal">ABOUT ME</div>
+    <div class="profile scroll-reveal">
+      <img src="manvi.jpg" alt="Intan">
+      <div>
+        <p><strong>Manvi Kamboj</strong> (a.k.a kernel coder), born on <strong>October 17, 2006</strong>. I build with purpose, learn with curiosity, and believe logic is beautiful. If I’m not coding, I’m probably helping someone else start their own journey in tech.</p>
+      </div>
+    </div>
+    <div class="quote scroll-reveal">
+     "Make it work, make it right, make it fast." -Kent Beck
+    </div>
+
+    <div class="flex">
+      <div class="left">
+        <div class="section scroll-reveal">
+  <h2>CONTACT</h2>
+  <p><i class="fas fa-phone-alt" style="color:#34a853; margin-right:8px;"></i> +91 XXX XXX XXXX</p>
+  <p><i class="fas fa-envelope" style="color:#ea4335; margin-right:8px;"></i> kamboj176manvi@gmail.com</p>
+  <p><i class="fas fa-map-marker-alt" style="color:#4285f4; margin-right:8px;"></i> Greater Noida, Uttar Pradesh</p>
+</div>
+
+
+       <div class="section scroll-reveal">
+  <h2>SOCIAL MEDIA</h2>
+  <p><i class="fab fa-instagram" style="color:#E1306C; margin-right: 8px;"></i> @_kizi.e_</p>
+  <p><i class="fab fa-linkedin" style="color:#0A66C2; margin-right: 8px;"></i> @Manvi Kamboj</p>
+  <p><i class="fab fa-x-twitter" style="color:#000; margin-right: 8px;"></i> @manvi_Kamboj17</p>
+  <p><i class="fab fa-discord" style="color:#5865F2; margin-right: 8px;"></i> @manvi_Kamboj</p>
+  <p><i class="fab fa-github" style="color:#333; margin-right: 8px;"></i> @ManviKamboz</p>
+  <p><i class="fas fa-code" style="color:#F89C1D; margin-right: 8px;"></i> @master_17 (LeetCode)</p>
+</div>
+
+
+       <div class="section scroll-reveal">
+  <h2>LANGUAGE SKILL</h2>
+  <div class="expertise">
+    <div class="lang-active"><i class="fab fa-python" style="margin-right:6px;"></i>Python</div>
+    <div class="lang-passive"><i class="fab fa-html5" style="margin-right:6px;"></i>HTML</div>
+    <div class="lang-passive"><i class="fab fa-css3-alt" style="margin-right:6px;"></i>CSS</div>
+    <div class="lang-passive"><i class="fab fa-js-square" style="margin-right:6px;"></i>JavaScript</div>
+    <div class="lang-passive"><i class="fas fa-database" style="margin-right:6px;"></i>MySQL</div>
+  </div>
+</div>
+
+
+        <div class="section scroll-reveal">
+  <h2>FRAMEWORK</h2>
+  <div class="language">
+    <div class="lang-active"><i class="fab fa-python" style="margin-right:6px;"></i>Django</div>
+    <div class="lang-passive"><i class="fas fa-flask" style="margin-right:6px;"></i>Flask</div>
+    <div class="lang-passive"><i class="fas fa-circle-nodes" style="margin-right:6px;"></i>N8N</div>
+    <div class="lang-passive"><i class="fab fa-bootstrap" style="margin-right:6px;"></i>Bootstrap</div>
+  </div>
+</div>
+
+
+       <div class="section scroll-reveal">
+  <h2>OTHER TOOLS</h2>
+  <div class="skills">
+    <div><i class="fab fa-linux" style="margin-right:6px;"></i>Linux</div>
+    <div><i class="fas fa-paint-brush" style="margin-right:6px;"></i>Canva</div>
+    <div><i class="fab fa-figma" style="margin-right:6px;"></i>Figma</div>
+  </div>
+</div>
+
+      <div class="right">
+        <div class="section scroll-reveal">
+          <h2>EDUCATION</h2>
+          <ul>
+            <li>2008-2024 – Guru Harkrishan Public School, Karnal (Haryana)</li>
+            <li>2024–2028 – Bennett University (Currently), Greater Noida (Uttar Pradesh)</li>
+          </ul>
+        </div>
+
+        <div class="section scroll-reveal">
+          <h2>PROJECT</h2>
+          <ul>
+            <li>2024 – Cafe Management System (Python)</li>
+            <li>2024 – Game Hub (PacMan, Tic-Tac-Toe, Flappy Bird) [Java]</li>
+          </ul>
+        </div>
+       
+        <div class="right">
+        <div class="section scroll-reveal">
+          <h2>ACHIEVEMENT</h2>
+          <ul>
+            <li>CBSE Xth Board- 94%</li>
+            <li>CBSE XIIth Board- 95.6%</li>
+            <li>QUALIFIED Written National Defence Academy EXAMINATION</li>
+            <li>CGPA- 9.41</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      const body = document.body;
+      const icon = document.getElementById("mode-icon");
+      body.classList.toggle('dark-mode');
+      icon.src = body.classList.contains('dark-mode')
+        ? "https://img.icons8.com/ios-glyphs/30/ffffff/sun--v1.png"
+        : "https://img.icons8.com/ios-glyphs/30/ffffff/moon-symbol.png";
+    }
+
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
+
