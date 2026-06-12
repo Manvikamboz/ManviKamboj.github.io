@@ -21,13 +21,12 @@ export const skills: Skill[] = [
   { label: "Tailwind CSS", icon: "fab fa-css3-alt", category: "fw" },
   { label: "PyTorch / OpenCV", icon: "fas fa-brain", category: "fw" },
   { label: "Django / Flask", icon: "fab fa-python", category: "fw" },
-  { label: "Three.js / Canvas", icon: "fas fa-cubes", category: "fw" },
   
   { label: "Linux", icon: "fab fa-linux", category: "tool" },
   { label: "Git / GitHub", icon: "fab fa-github", category: "tool" },
   { label: "MongoDB", icon: "fas fa-leaf", category: "tool" },
   { label: "Docker", icon: "fab fa-docker", category: "tool" },
-  { label: "Vercel / Render", icon: "fas fa-cloud", category: "tool" },
+  { label: "AWS", icon: "fab fa-aws", category: "tool" },
 ];
 
 export const projects: Project[] = [
@@ -111,7 +110,6 @@ export const achievements: Achievement[] = [
   { badge: "🎓", label: "CBSE Xth Board — 94%" },
   { badge: "🎓", label: "CBSE XIIth Board — 95.6%" },
   { badge: "⭐", label: "CGPA — 9.13" },
-  { badge: "🏅", label: "Qualified NDA Written Examination" },
 ];
 
 export const contactItems: ContactItem[] = [

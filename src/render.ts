@@ -118,7 +118,13 @@ export function renderMemes(
     // Window Body
     const winBody = el("div", "win-body");
     const img = el("img");
-    img.src = m.imageUrl;
+    
+    // Resolve imageUrl with the base path if it starts with "/"
+    let src = m.imageUrl;
+    if (src.startsWith("/")) {
+      src = `${import.meta.env.BASE_URL.replace(/\/$/, "")}${src}`;
+    }
+    img.src = src;
     img.alt = m.title;
     img.loading = "lazy";
     
