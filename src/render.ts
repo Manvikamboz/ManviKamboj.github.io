@@ -567,8 +567,16 @@ function setupElectricBorder(
   let time = 0;
   let lastFrameTime = 0;
 
+  // Precomputed random table for noise to avoid Math.sin calls in the hot path
+  const randomTableSize = 4096;
+  const randomTable = new Float32Array(randomTableSize);
+  for (let i = 0; i < randomTableSize; i++) {
+    randomTable[i] = (Math.sin(i * 12.9898) * 43758.5453) % 1;
+  }
+
   const random = (x: number): number => {
-    return (Math.sin(x * 12.9898) * 43758.5453) % 1;
+    const idx = Math.abs(x | 0) % randomTableSize;
+    return randomTable[idx];
   };
 
   const noise2D = (x: number, y: number): number => {
@@ -635,16 +643,15 @@ function setupElectricBorder(
     t: number,
     left: number,
     top: number,
-    width: number,
-    height: number,
-    radius: number
+    borderWidth: number,
+    borderHeight: number,
+    radius: number,
+    straightWidth: number,
+    straightHeight: number,
+    cornerArc: number,
+    totalPerimeter: number
   ): { x: number; y: number } => {
-    const straightWidth = width - 2 * radius;
-    const straightHeight = height - 2 * radius;
-    const cornerArc = (Math.PI * radius) / 2;
-    const totalPerimeter = 2 * straightWidth + 2 * straightHeight + 4 * cornerArc;
     const distance = t * totalPerimeter;
-
     let accumulated = 0;
 
     if (distance <= accumulated + straightWidth) {
@@ -655,37 +662,37 @@ function setupElectricBorder(
 
     if (distance <= accumulated + cornerArc) {
       const progress = (distance - accumulated) / cornerArc;
-      return getCornerPoint(left + width - radius, top + radius, radius, -Math.PI / 2, Math.PI / 2, progress);
+      return getCornerPoint(left + borderWidth - radius, top + radius, radius, -Math.PI / 2, Math.PI / 2, progress);
     }
     accumulated += cornerArc;
 
     if (distance <= accumulated + straightHeight) {
       const progress = (distance - accumulated) / straightHeight;
-      return { x: left + width, y: top + radius + progress * straightHeight };
+      return { x: left + borderWidth, y: top + radius + progress * straightHeight };
     }
     accumulated += straightHeight;
 
     if (distance <= accumulated + cornerArc) {
       const progress = (distance - accumulated) / cornerArc;
-      return getCornerPoint(left + width - radius, top + height - radius, radius, 0, Math.PI / 2, progress);
+      return getCornerPoint(left + borderWidth - radius, top + borderHeight - radius, radius, 0, Math.PI / 2, progress);
     }
     accumulated += cornerArc;
 
     if (distance <= accumulated + straightWidth) {
       const progress = (distance - accumulated) / straightWidth;
-      return { x: left + width - radius - progress * straightWidth, y: top + height };
+      return { x: left + borderWidth - radius - progress * straightWidth, y: top + borderHeight };
     }
     accumulated += straightWidth;
 
     if (distance <= accumulated + cornerArc) {
       const progress = (distance - accumulated) / cornerArc;
-      return getCornerPoint(left + radius, top + height - radius, radius, Math.PI / 2, Math.PI / 2, progress);
+      return getCornerPoint(left + radius, top + borderHeight - radius, radius, Math.PI / 2, Math.PI / 2, progress);
     }
     accumulated += cornerArc;
 
     if (distance <= accumulated + straightHeight) {
       const progress = (distance - accumulated) / straightHeight;
-      return { x: left, y: top + height - radius - progress * straightHeight };
+      return { x: left, y: top + borderHeight - radius - progress * straightHeight };
     }
     accumulated += straightHeight;
 
@@ -693,7 +700,8 @@ function setupElectricBorder(
     return getCornerPoint(left + radius, top + radius, radius, Math.PI, Math.PI / 2, progress);
   };
 
-  const octaves = 10;
+  // Noise config: optimized by reducing octaves from 10 to 3
+  const octaves = 3;
   const lacunarity = 1.6;
   const gain = 0.7;
   const amplitude = chaos;
@@ -701,6 +709,17 @@ function setupElectricBorder(
   const baseFlatness = 0;
   const displacement = 60;
   const borderOffset = 60;
+
+  const isMobileQuery = window.matchMedia("(max-width: 768px)");
+  const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  let isIntersecting = false;
+  let isMobile = isMobileQuery.matches;
+  let prefersReducedMotion = reducedMotionQuery.matches;
+
+  const shouldRunAnimation = () => {
+    return isIntersecting && !isMobile && !prefersReducedMotion;
+  };
 
   const updateSize = () => {
     const rect = container.getBoundingClientRect();
@@ -712,27 +731,35 @@ function setupElectricBorder(
     canvas.height = height * dpr;
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
 
     return { width, height };
   };
 
-  let { width, height } = updateSize();
-  let lastDpr = Math.min(window.devicePixelRatio || 1, 2);
+  let width = 0;
+  let height = 0;
+
+  if (!isMobile && !prefersReducedMotion) {
+    const size = updateSize();
+    width = size.width;
+    height = size.height;
+  }
 
   const drawElectricBorder = (currentTime: number) => {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    if (dpr !== lastDpr) {
-      lastDpr = dpr;
-      const newSize = updateSize();
-      width = newSize.width;
-      height = newSize.height;
+    if (!shouldRunAnimation()) {
+      animationFrameId = null;
+      return;
     }
 
+    if (lastFrameTime === 0) {
+      lastFrameTime = currentTime;
+    }
     const deltaTime = (currentTime - lastFrameTime) / 1000;
     time += deltaTime * speed;
     lastFrameTime = currentTime;
 
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.scale(dpr, dpr);
@@ -750,15 +777,32 @@ function setupElectricBorder(
     const maxRadius = Math.min(borderWidth, borderHeight) / 2;
     const radius = Math.min(borderRadius, maxRadius);
 
-    const approximatePerimeter = 2 * (borderWidth + borderHeight) + 2 * Math.PI * radius;
-    const sampleCount = Math.floor(approximatePerimeter / 2);
+    // Precompute straight dimensions and arc segments
+    const straightWidth = borderWidth - 2 * radius;
+    const straightHeight = borderHeight - 2 * radius;
+    const cornerArc = (Math.PI * radius) / 2;
+    const totalPerimeter = 2 * straightWidth + 2 * straightHeight + 4 * cornerArc;
+
+    // Optimized sample count: divisor increased from 2 to 6
+    const sampleCount = Math.floor(totalPerimeter / 6);
 
     ctx.beginPath();
 
     for (let i = 0; i <= sampleCount; i++) {
       const progress = i / sampleCount;
 
-      const point = getRoundedRectPoint(progress, left, top, borderWidth, borderHeight, radius);
+      const point = getRoundedRectPoint(
+        progress,
+        left,
+        top,
+        borderWidth,
+        borderHeight,
+        radius,
+        straightWidth,
+        straightHeight,
+        cornerArc,
+        totalPerimeter
+      );
 
       const xNoise = octavedNoise(
         progress * 8,
@@ -799,19 +843,66 @@ function setupElectricBorder(
     animationFrameId = requestAnimationFrame(drawElectricBorder);
   };
 
+  const handleMediaChange = () => {
+    isMobile = isMobileQuery.matches;
+    prefersReducedMotion = reducedMotionQuery.matches;
+
+    if (isMobile || prefersReducedMotion) {
+      canvas.style.display = "none";
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    } else {
+      canvas.style.display = "block";
+      const size = updateSize();
+      width = size.width;
+      height = size.height;
+      if (shouldRunAnimation() && !animationFrameId) {
+        lastFrameTime = 0;
+        animationFrameId = requestAnimationFrame(drawElectricBorder);
+      }
+    }
+  };
+
+  isMobileQuery.addEventListener("change", handleMediaChange);
+  reducedMotionQuery.addEventListener("change", handleMediaChange);
+
   const resizeObserver = new ResizeObserver(() => {
-    const newSize = updateSize();
-    width = newSize.width;
-    height = newSize.height;
+    if (isMobile || prefersReducedMotion) return;
+    const size = updateSize();
+    width = size.width;
+    height = size.height;
   });
   resizeObserver.observe(container);
 
-  animationFrameId = requestAnimationFrame(drawElectricBorder);
+  const intersectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        isIntersecting = entry.isIntersecting;
+        if (shouldRunAnimation() && !animationFrameId) {
+          lastFrameTime = 0;
+          animationFrameId = requestAnimationFrame(drawElectricBorder);
+        } else if (!isIntersecting && animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = null;
+        }
+      });
+    },
+    { threshold: 0.01 }
+  );
+  intersectionObserver.observe(container);
+
+  // Initial trigger
+  handleMediaChange();
 
   return () => {
     if (animationFrameId) {
       cancelAnimationFrame(animationFrameId);
     }
     resizeObserver.disconnect();
+    intersectionObserver.disconnect();
+    isMobileQuery.removeEventListener("change", handleMediaChange);
+    reducedMotionQuery.removeEventListener("change", handleMediaChange);
   };
 }

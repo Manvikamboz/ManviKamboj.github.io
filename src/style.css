@@ -772,6 +772,7 @@ footer {
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 2;
+  will-change: transform;
 }
 
 .eb-canvas {
@@ -818,6 +819,7 @@ footer {
   filter: blur(32px);
   opacity: 0.3;
   background: linear-gradient(-30deg, var(--electric-light-color), transparent, var(--electric-border-color));
+  will-change: transform, opacity;
 }
 
 /* Mobile Optimization & Responsive Typography */
@@ -825,6 +827,9 @@ footer {
   h1 { font-size: 2.2rem !important; }
   h2 { font-size: 1.8rem !important; }
   .hero-role { font-size: 1.2rem !important; }
+  .eb-canvas-container {
+    display: none !important;
+  }
 }
 
 @media (max-width: 480px) {
