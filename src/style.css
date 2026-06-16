@@ -56,7 +56,9 @@ nav {
 .nav-logo {
   font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:800;
   background:linear-gradient(135deg,#00f5d4,#00b4d8);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 .nav-links { display:flex;gap:2rem;list-style:none; }
 .nav-links a {
