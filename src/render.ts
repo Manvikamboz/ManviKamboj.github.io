@@ -1,4 +1,4 @@
-import type { Skill, Project, Education, Achievement, ContactItem, SocialItem, DevMeme } from "./types";
+import type { Skill, Project, Education, Achievement, ContactItem, SocialItem, Certification } from "./types";
 
 // ─── Generic element creator ─────────────────────────────────────────────────
 
@@ -56,90 +56,110 @@ export function renderSkills(
 
 export function renderProjects(
   container: HTMLElement,
-  projects: Project[]
+  projects: Project[],
+  category?: "creative" | "contribution"
 ): void {
   const grid = el("div", "projects-grid");
+  const filtered = category ? projects.filter((p) => p.category === category) : projects;
 
-  projects.forEach((p) => {
-    const card = p.githubUrl ? (el("a", "card project-card reveal") as HTMLAnchorElement) : el("div", "card project-card reveal");
-    if (p.githubUrl && card instanceof HTMLAnchorElement) {
-      card.href = p.githubUrl;
-      card.target = "_blank";
-      card.rel = "noopener";
-      card.style.textDecoration = "none";
-      card.style.color = "inherit";
+  filtered.forEach((p) => {
+    const targetUrl = p.websiteUrl || p.githubUrl || "#";
+    const card = el("a", "card project-card reveal") as HTMLAnchorElement;
+    card.href = targetUrl;
+    card.target = "_blank";
+    card.rel = "noopener";
+    card.style.textDecoration = "none";
+    card.style.color = "inherit";
+
+    if (p.prStatus && p.prStatus.state === "merged") {
+      card.classList.add("highlighted-pr-card");
     }
 
+    // Image preview wrapper
+    if (p.imageUrl) {
+      const imgWrapper = el("div", "project-image-wrapper");
+      const img = el("img") as HTMLImageElement;
+      let src = p.imageUrl;
+      if (src.startsWith("/")) {
+        src = `${import.meta.env.BASE_URL.replace(/\/$/, "")}${src}`;
+      }
+      img.src = src;
+      img.alt = p.name;
+      img.loading = "lazy";
+      imgWrapper.appendChild(img);
+      card.appendChild(imgWrapper);
+    }
+
+    // Card Content Container
+    const content = el("div", "project-card-content");
+
+    const header = el("div", "project-card-header");
     const icon = el("div", "project-icon");
     icon.style.background = p.accentColor;
     icon.textContent = p.emoji;
+    header.appendChild(icon);
 
-    const title = el("h3", "", p.githubUrl ? `${p.name} <i class="fas fa-external-link-alt" style="font-size:0.8rem;margin-left:5px;opacity:0.7"></i>` : p.name);
+    // Title with link icons
+    let titleHtml = p.name;
+    if (p.websiteUrl) {
+      titleHtml += ` <i class="fas fa-external-link-alt" style="font-size:0.8rem;margin-left:5px;opacity:0.7" title="Live Site"></i>`;
+    }
+    const title = el("h3", "", titleHtml);
+    header.appendChild(title);
+    content.appendChild(header);
+
     const desc = el("p", "", p.description);
-    const year = el(
-      "div",
+    content.appendChild(desc);
+
+    // PR Status block
+    if (p.prStatus) {
+      const prContainer = el("div", "project-pr-container");
+      const prBadge = el("a", `pr-badge ${p.prStatus.state}`) as HTMLAnchorElement;
+      prBadge.href = p.prStatus.url;
+      prBadge.target = "_blank";
+      prBadge.rel = "noopener";
+      
+      const iconClass = p.prStatus.state === "merged" ? "fas fa-git-merge" : "fas fa-git-pull-request";
+      const prText = p.prStatus.state === "merged" ? "PR Merged" : "PR Active";
+      const prNum = p.prStatus.url.split("/").pop();
+      prBadge.innerHTML = `<i class="${iconClass}"></i> ${prText} #${prNum}`;
+      prBadge.addEventListener("click", (e) => e.stopPropagation());
+
+      const prTitle = el("span", "pr-title", p.prStatus.title);
+      prTitle.title = p.prStatus.title;
+
+      prContainer.appendChild(prBadge);
+      prContainer.appendChild(prTitle);
+      content.appendChild(prContainer);
+    }
+
+    // Footer with year/tech and external code link if card points to live site
+    const footer = el("div", "project-card-footer");
+    const yearInfo = el(
+      "span",
       "project-year",
       `<i class="fas fa-calendar-alt"></i> ${p.year} &nbsp;·&nbsp; ${p.tech}`
     );
+    footer.appendChild(yearInfo);
 
-    card.appendChild(icon);
-    card.appendChild(title);
-    card.appendChild(desc);
-    card.appendChild(year);
-    grid.appendChild(card);
-  });
-
-  container.appendChild(grid);
-}
-
-// ─── Memes Section ───────────────────────────────────────────────────────────
-
-export function renderMemes(
-  container: HTMLElement,
-  memes: DevMeme[]
-): void {
-  const grid = el("div", "memes-grid");
-
-  memes.forEach((m) => {
-    // OS Window Mockup style card
-    const card = el("div", "card meme-card reveal");
-    
-    // Window header bar
-    const winHeader = el("div", "win-header");
-    const dots = el("div", "win-dots");
-    dots.appendChild(el("span", "dot red"));
-    dots.appendChild(el("span", "dot yellow"));
-    dots.appendChild(el("span", "dot green"));
-    
-    const winTitle = el("div", "win-title", m.title);
-    winHeader.appendChild(dots);
-    winHeader.appendChild(winTitle);
-    
-    // Window Body
-    const winBody = el("div", "win-body");
-    const img = el("img");
-    
-    // Resolve imageUrl with the base path if it starts with "/"
-    let src = m.imageUrl;
-    if (src.startsWith("/")) {
-      src = `${import.meta.env.BASE_URL.replace(/\/$/, "")}${src}`;
+    if (p.websiteUrl && p.githubUrl) {
+      const ghLink = el("a", "project-code-link") as HTMLAnchorElement;
+      ghLink.href = p.githubUrl;
+      ghLink.target = "_blank";
+      ghLink.rel = "noopener";
+      ghLink.innerHTML = `<i class="fab fa-github"></i> Code`;
+      ghLink.addEventListener("click", (e) => e.stopPropagation());
+      footer.appendChild(ghLink);
     }
-    img.src = src;
-    img.alt = m.title;
-    img.loading = "lazy";
-    
-    const caption = el("p", "meme-caption", m.caption);
-    
-    winBody.appendChild(img);
-    winBody.appendChild(caption);
-    
-    card.appendChild(winHeader);
-    card.appendChild(winBody);
+
+    content.appendChild(footer);
+    card.appendChild(content);
     grid.appendChild(card);
   });
 
   container.appendChild(grid);
 }
+
 
 // ─── Education & Achievements ────────────────────────────────────────────────
 
@@ -183,7 +203,56 @@ export function renderEducation(
   eduCard.appendChild(eduHeading);
   eduCard.appendChild(timeline);
 
-  // Achievements card
+function openImageModal(src: string, alt: string): void {
+  const modal = document.createElement("div");
+  modal.className = "image-modal";
+  modal.style.cssText = `
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 7, 10, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  `;
+  
+  const img = document.createElement("img");
+  img.src = src;
+  img.alt = alt;
+  img.style.cssText = `
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0, 245, 212, 0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+  `;
+
+  modal.appendChild(img);
+  document.body.appendChild(modal);
+
+  setTimeout(() => {
+    modal.style.opacity = "1";
+    img.style.transform = "scale(1)";
+  }, 10);
+
+  const closeModal = () => {
+    modal.style.opacity = "0";
+    img.style.transform = "scale(0.95)";
+    setTimeout(() => {
+      modal.remove();
+    }, 300);
+  };
+
+  modal.addEventListener("click", closeModal);
+}
+
+// Achievements card
   const achCard = el("div", "card reveal");
   const achHeading = el("h3", "", "Achievements");
   achHeading.style.cssText =
@@ -192,10 +261,41 @@ export function renderEducation(
 
   achievements.forEach((a) => {
     const item = el("div", "ach-item");
+    
+    const header = el("div", "ach-item-header");
     const badge = el("span", "ach-badge", a.badge);
-    const label = el("span", "", a.label);
-    item.appendChild(badge);
-    item.appendChild(label);
+    const label = el("span", "ach-label", a.label);
+    header.appendChild(badge);
+    header.appendChild(label);
+    item.appendChild(header);
+
+    if (a.description) {
+      const desc = el("div", "ach-item-desc", a.description);
+      item.appendChild(desc);
+    }
+
+    if (a.images && a.images.length > 0) {
+      const slider = el("div", "ach-image-slider");
+      a.images.forEach((imgSrc) => {
+        let src = imgSrc;
+        if (src.startsWith("/")) {
+          src = `${import.meta.env.BASE_URL.replace(/\/$/, "")}${src}`;
+        }
+        const thumb = el("img", "ach-thumb") as HTMLImageElement;
+        thumb.src = src;
+        thumb.alt = a.label;
+        thumb.loading = "lazy";
+        
+        thumb.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openImageModal(src, a.label);
+        });
+
+        slider.appendChild(thumb);
+      });
+      item.appendChild(slider);
+    }
+
     achList.appendChild(item);
   });
 
@@ -253,4 +353,146 @@ export function renderContact(
   });
 
   container.appendChild(grid);
+}
+
+export function renderLogoLoop(
+  container: HTMLElement,
+  skillsList: Skill[]
+): void {
+  const track = el("div", "logo-loop-track");
+
+  // Duplicate the list of skills to ensure smooth infinite loop transition
+  const fullList = [...skillsList, ...skillsList];
+
+  fullList.forEach((s) => {
+    const item = el("div", "logo-item");
+    item.innerHTML = `<i class="${s.icon}"></i>`;
+    track.appendChild(item);
+  });
+
+  container.appendChild(track);
+}
+
+export function renderCertifications(
+  container: HTMLElement,
+  certs: Certification[]
+): void {
+  const grid = el("div", "certifications-grid");
+
+  certs.forEach((c) => {
+    let href = c.credentialUrl;
+    if (href && href.startsWith("/")) {
+      href = `${import.meta.env.BASE_URL.replace(/\/$/, "")}${href}`;
+    }
+    const card = href ? (el("a", "card cert-card reveal") as HTMLAnchorElement) : el("div", "card cert-card reveal");
+    if (href && card instanceof HTMLAnchorElement) {
+      card.href = href;
+      card.target = "_blank";
+      card.rel = "noopener";
+      card.style.textDecoration = "none";
+      card.style.color = "inherit";
+    }
+
+    const header = el("div", "cert-header");
+    const iconWrapper = el("div", "cert-icon");
+    iconWrapper.innerHTML = `<i class="${c.icon}"></i>`;
+    header.appendChild(iconWrapper);
+
+    const body = el("div", "cert-body");
+    const title = el("h3", "", href ? `${c.title} <i class="fas fa-external-link-alt" style="font-size:0.75rem;margin-left:4px;opacity:0.6"></i>` : c.title);
+    const issuer = el("div", "cert-issuer", c.issuer);
+    const date = el("div", "cert-date", `<i class="fas fa-calendar-alt"></i> ${c.date}`);
+
+    body.appendChild(title);
+    body.appendChild(issuer);
+    body.appendChild(date);
+
+    card.appendChild(header);
+    card.appendChild(body);
+    grid.appendChild(card);
+  });
+
+  container.appendChild(grid);
+}
+
+export function renderFeaturedProject(
+  container: HTMLElement,
+  project: Project
+): void {
+  container.innerHTML = "";
+
+  const card = el("div", "card featured-project-card reveal");
+  
+  // Spotlight header badge
+  const spotlightBadge = el("div", "spotlight-badge");
+  spotlightBadge.innerHTML = `<i class="fas fa-star" style="color:#a78bfa"></i> FEATURED SPOTLIGHT`;
+  card.appendChild(spotlightBadge);
+
+  const mainRow = el("div", "featured-main-row");
+
+  // Screenshot column
+  if (project.imageUrl) {
+    const imgCol = el("a", "featured-img-col") as HTMLAnchorElement;
+    imgCol.href = project.websiteUrl || project.githubUrl || "#";
+    imgCol.target = "_blank";
+    imgCol.rel = "noopener";
+
+    const img = el("img") as HTMLImageElement;
+    let src = project.imageUrl;
+    if (src.startsWith("/")) {
+      src = `${import.meta.env.BASE_URL.replace(/\/$/, "")}${src}`;
+    }
+    img.src = src;
+    img.alt = project.name;
+    img.loading = "lazy";
+    imgCol.appendChild(img);
+    mainRow.appendChild(imgCol);
+  }
+
+  const rightCol = el("div", "featured-right-col");
+
+  // Header row (icon + title)
+  const headerRow = el("div", "featured-header-row");
+  const icon = el("div", "featured-icon");
+  icon.style.background = project.accentColor;
+  icon.textContent = project.emoji;
+  
+  const title = el("h3", "", project.name);
+  headerRow.appendChild(icon);
+  headerRow.appendChild(title);
+  rightCol.appendChild(headerRow);
+
+  const desc = el("p", "", project.description);
+  rightCol.appendChild(desc);
+  
+  const techList = el("div", "featured-tech-list");
+  project.tech.split(" / ").forEach((t) => {
+    const chip = el("span", "featured-tech-chip", t);
+    techList.appendChild(chip);
+  });
+  rightCol.appendChild(techList);
+
+  const actions = el("div", "featured-actions");
+  if (project.githubUrl) {
+    const codeBtn = el("a", "btn btn-outline featured-btn") as HTMLAnchorElement;
+    codeBtn.href = project.githubUrl;
+    codeBtn.target = "_blank";
+    codeBtn.rel = "noopener";
+    codeBtn.innerHTML = `<i class="fab fa-github"></i> Source Code`;
+    actions.appendChild(codeBtn);
+  }
+  if (project.websiteUrl) {
+    const liveBtn = el("a", "btn btn-primary featured-btn") as HTMLAnchorElement;
+    liveBtn.href = project.websiteUrl;
+    liveBtn.target = "_blank";
+    liveBtn.rel = "noopener";
+    liveBtn.innerHTML = `<i class="fas fa-external-link-alt"></i> Live Site`;
+    actions.appendChild(liveBtn);
+  }
+  rightCol.appendChild(actions);
+
+  mainRow.appendChild(rightCol);
+  card.appendChild(mainRow);
+  
+  container.appendChild(card);
 }

@@ -6,13 +6,12 @@ import {
   achievements,
   contactItems,
   socialItems,
-  devMemes,
+  certifications,
 } from "./data";
-import { renderSkills, renderProjects, renderEducation, renderContact, renderMemes } from "./render";
+import { renderSkills, renderProjects, renderEducation, renderContact, renderLogoLoop, renderCertifications, renderFeaturedProject } from "./render";
 import {
   initScrollReveal,
   initNavHighlight,
-  initTypedEffect,
   initSmoothScroll,
 } from "./animations";
 
@@ -25,16 +24,20 @@ function qs<T extends HTMLElement>(selector: string): T {
 
 // ─── Render dynamic sections ─────────────────────────────────────────────────
 renderSkills(qs<HTMLElement>("#skills-container"), skills);
-renderProjects(qs<HTMLElement>("#projects-container"), projects);
-renderMemes(qs<HTMLElement>("#memes-container"), devMemes);
+renderLogoLoop(qs<HTMLElement>("#logo-loop-slider"), skills);
+
+const startora = projects.find(p => p.name === "Startora Platform");
+if (startora) {
+  renderFeaturedProject(qs<HTMLElement>("#featured-project-container"), startora);
+}
+
+const otherProjects = projects.filter(p => p.name !== "Startora Platform");
+renderProjects(qs<HTMLElement>("#creative-projects-container"), otherProjects, "creative");
+renderProjects(qs<HTMLElement>("#contribution-projects-container"), otherProjects, "contribution");
 renderEducation(qs<HTMLElement>("#education-container"), education, achievements);
+renderCertifications(qs<HTMLElement>("#certifications-container"), certifications);
 renderContact(qs<HTMLElement>("#contact-container"), contactItems, socialItems);
 
-// ─── Typed effect on hero subtitle ──────────────────────────────────────────
-const typedEl = document.querySelector<HTMLElement>("#typed-role");
-if (typedEl) {
-  initTypedEffect(typedEl, ["compiles code", "breaks prod", "runs linux", "drinks coffee", "fights windows update"], 80, 2200);
-}
 
 // ─── Animations & interactivity ──────────────────────────────────────────────
 initScrollReveal();

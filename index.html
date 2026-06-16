@@ -22,8 +22,8 @@
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#memes">Meme Cache</a></li>
       <li><a href="#education">Education</a></li>
+      <li><a href="#certifications">Certifications</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -33,39 +33,34 @@
     <div class="hero-text">
       <div class="hero-badge">Kernel Coder</div>
       <h1>Hi, I'm <span class="name">Manvi Kamboj</span></h1>
-      <div class="hero-role">&gt; manvi <span id="typed-role"></span></div>
-      <p class="hero-sub">
-        Building systems, writing logic, and compiling beautiful code. I build with purpose, learn with curiosity, and believe linux is supreme.
-      </p>
+      <div class="hero-role">Software Developer</div>
+      <p class="hero-sub">Specializing in high-performance computer vision pipelines, open-source infrastructure tools, and kernel-level scripts.</p>
+      <div class="hero-quote">"Simplicity is the soul of efficiency."</div>
       <div class="hero-btns">
-        <a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> Projects</a>
-        <a href="#memes" class="btn btn-outline"><i class="fas fa-laugh"></i> Meme Cache</a>
+        <a href="#contact" class="btn btn-primary">Get in Touch <i class="fas fa-arrow-right"></i></a>
+        <a href="#projects" class="btn btn-outline">View Projects <i class="fas fa-code"></i></a>
       </div>
     </div>
     
-    <!-- Interactive Terminal mockup instead of picture -->
-    <div class="hero-terminal reveal">
-      <div class="terminal-bar">
-        <div class="win-dots">
-          <span class="dot red"></span>
-          <span class="dot yellow"></span>
-          <span class="dot green"></span>
+    <!-- Terminal Card (Replaced Avatar) -->
+    <div class="hero-terminal">
+      <div class="terminal-header">
+        <div class="terminal-buttons">
+          <span class="btn-dot close"></span>
+          <span class="btn-dot minimize"></span>
+          <span class="btn-dot expand"></span>
         </div>
-        <div class="terminal-title">bash - manvi@kernel-coder</div>
+        <div class="terminal-title">manvi@kernel:~</div>
       </div>
       <div class="terminal-body">
         <div class="line"><span class="cmd-prompt">manvi@kernel:~$</span> neofetch</div>
-        <div class="neofetch-content">
-          <pre class="neofetch-logo">
-    .--.
-   |o_o |
-   |:_/ |
-  //   \ \
- (|     | )
-/'\_   _/`\
-\___)=(___/
-          </pre>
-          <div class="neofetch-info">
+        <div class="neofetch-output">
+          <span class="ascii-art">
+            /\_/\<br/>
+           ( o.o )<br/>
+            &gt; ^ &lt;<br/>
+          </span>
+          <div class="sys-info">
             <span class="info-label">OS:</span> Linux <br/>
             <span class="info-label">Host:</span> Bennett University B.Tech <br/>
             <span class="info-label">Kernel:</span> 2006.10.17-manvi <br/>
@@ -88,18 +83,25 @@
     <div id="skills-container"></div>
   </section>
 
-  <!-- PROJECTS -->
-  <section class="section" id="projects">
-    <div class="section-label reveal">Work</div>
-    <h2 class="section-title reveal">My Projects (via GitHub)</h2>
-    <div id="projects-container"></div>
+  <!-- LOGO LOOP MARQUEE -->
+  <section class="logo-loop-section reveal">
+    <div class="logo-loop-slider" id="logo-loop-slider"></div>
   </section>
 
-  <!-- DEV MEMES -->
-  <section class="section" id="memes">
-    <div class="section-label reveal">Dev Humor</div>
-    <h2 class="section-title reveal">The Meme Cache</h2>
-    <div id="memes-container"></div>
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="section-label reveal">Portfolio</div>
+    <h2 class="section-title reveal">Featured Projects</h2>
+    
+    <div id="featured-project-container" style="margin-bottom: 5rem;"></div>
+    
+    <div class="section-label reveal">Creatively Crafted</div>
+    <h2 class="section-title reveal">Self Creative</h2>
+    <div id="creative-projects-container" style="margin-bottom: 5rem;"></div>
+
+    <div class="section-label reveal">Open Source Contributions</div>
+    <h2 class="section-title reveal">Open Source Projects</h2>
+    <div id="contribution-projects-container"></div>
   </section>
 
   <!-- EDUCATION & ACHIEVEMENTS -->
@@ -107,6 +109,13 @@
     <div class="section-label reveal">Background</div>
     <h2 class="section-title reveal">Education &amp; Achievements</h2>
     <div id="education-container"></div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section class="section" id="certifications">
+    <div class="section-label reveal">Credentials</div>
+    <h2 class="section-title reveal">Certifications</h2>
+    <div id="certifications-container"></div>
   </section>
 
   <!-- CONTACT -->

@@ -5,7 +5,7 @@ import type {
   Achievement,
   ContactItem,
   SocialItem,
-  DevMeme,
+  Certification,
 } from "./types";
 
 export const skills: Skill[] = [
@@ -39,6 +39,14 @@ export const projects: Project[] = [
     tech: "TypeScript / Canvas / Three.js",
     accentColor: "rgba(244,114,182,0.15)",
     githubUrl: "https://github.com/Manvikamboz/git-city",
+    category: "contribution",
+    imageUrl: "/open source project website/gitcity.png",
+    websiteUrl: "https://thegitcity.com/",
+    prStatus: {
+      title: "Refactor theme system to configuration-driven key system",
+      url: "https://github.com/srizzon/git-city/pull/111",
+      state: "open",
+    },
   },
   {
     emoji: "💪",
@@ -49,6 +57,68 @@ export const projects: Project[] = [
     tech: "React / Node.js / MongoDB / Express",
     accentColor: "rgba(6,182,212,0.15)",
     githubUrl: "https://github.com/Manvikamboz/FitMart_.",
+    category: "contribution",
+    imageUrl: "/open source project website/FinMart.png",
+    websiteUrl: "https://fitmart-omega.vercel.app/",
+    prStatus: {
+      title: "fix: add missing FitnessCenter schema fields",
+      url: "https://github.com/parthbuilds-community/FitMart/pull/549",
+      state: "open",
+    },
+  },
+  {
+    emoji: "🐱",
+    name: "Cat Facts",
+    description:
+      "A fun API and subscription service delivering daily facts about cats.",
+    year: "2026",
+    tech: "Node.js / Express / IFTTT",
+    accentColor: "rgba(251,191,36,0.15)",
+    githubUrl: "https://github.com/alexwohlbruck/cat-facts",
+    category: "contribution",
+    imageUrl: "/open source project website/catfacts.png",
+    websiteUrl: "https://catfacts.wohlbruck.dev/",
+    prStatus: {
+      title: "fix: prevent failed IFTTT deliveries from being saved as successful sent status",
+      url: "https://github.com/alexwohlbruck/cat-facts/pull/199",
+      state: "open",
+    },
+  },
+  {
+    emoji: "🐶",
+    name: "Dog API Images",
+    description:
+      "A massive database of dog breed images and database sanitation utilities.",
+    year: "2026",
+    tech: "Node.js / Scripting",
+    accentColor: "rgba(248,113,113,0.15)",
+    githubUrl: "https://github.com/jigsawpieces/dog-api-images",
+    category: "contribution",
+    imageUrl: "/open source project website/dog_api.png",
+    websiteUrl: "https://dog.ceo/dog-api/",
+    prStatus: {
+      title: "Fix image formats, sizes, and remove non-image files in breed directories",
+      url: "https://github.com/jigsawpieces/dog-api-images/pull/375",
+      state: "merged",
+    },
+  },
+  {
+    emoji: "⚡",
+    name: "JAX",
+    description:
+      "Autograd and XLA for high-performance machine learning research in Python.",
+    year: "2026",
+    tech: "Python / JIT / C++",
+    accentColor: "rgba(16,185,129,0.15)",
+    githubUrl: "https://github.com/jax-ml/jax",
+    category: "contribution",
+    imageUrl: "/open source project website/jax.png",
+    websiteUrl: "https://docs.jax.dev/",
+    prStatus: {
+      title: "Fix JIT compilation cache false hits on closed-over leaked tracers",
+      url: "https://github.com/jax-ml/jax/pull/38473",
+      state: "open",
+    },
   },
   {
     emoji: "🚀",
@@ -59,6 +129,9 @@ export const projects: Project[] = [
     tech: "React / Tailwind / Node.js",
     accentColor: "rgba(124,58,237,0.15)",
     githubUrl: "https://github.com/Manvikamboz/Startora",
+    category: "creative",
+    imageUrl: "/startora.png",
+    websiteUrl: "https://manvikamboz.github.io/Startora/",
   },
   {
     emoji: "🧠",
@@ -69,6 +142,14 @@ export const projects: Project[] = [
     tech: "TypeScript / LLMs / Scrapers",
     accentColor: "rgba(234,179,8,0.15)",
     githubUrl: "https://github.com/Manvikamboz/last30days-skill",
+    category: "contribution",
+    imageUrl: "/open source project website/last30skills.png",
+    websiteUrl: "https://github.com/Manvikamboz/last30days-skill",
+    prStatus: {
+      title: "fix(youtube): prioritize in-window videos for transcript fetching",
+      url: "https://github.com/mvanhorn/last30days-skill/pull/533",
+      state: "open",
+    },
   },
   {
     emoji: "🚗",
@@ -79,6 +160,7 @@ export const projects: Project[] = [
     tech: "Python / OpenCV / PyTorch",
     accentColor: "rgba(34,197,94,0.15)",
     githubUrl: "https://github.com/Manvikamboz/EdgeVision-ANPR-",
+    category: "creative",
   },
   {
     emoji: "🎣",
@@ -89,6 +171,36 @@ export const projects: Project[] = [
     tech: "Python / Scikit-Learn / Flask",
     accentColor: "rgba(239,68,68,0.15)",
     githubUrl: "https://github.com/Manvikamboz/phishing-detection",
+    category: "creative",
+  },
+  {
+    emoji: "☕",
+    name: "Cafe Management System",
+    description:
+      "A smart administration system designed for cafes to streamline order handling, menu management, and real-time billing.",
+    year: "2024",
+    tech: "JavaScript / HTML5 / CSS3",
+    accentColor: "rgba(249,115,22,0.15)",
+    githubUrl: "https://github.com/Manvikamboz/Cafe_Managment_System",
+    category: "creative",
+  },
+  {
+    emoji: "🔍",
+    name: "ClusterFuzz",
+    description:
+      "Scalable fuzzing infrastructure by Google for finding security vulnerabilities and stability bugs in software.",
+    year: "2026",
+    tech: "C++ / Python / Go",
+    accentColor: "rgba(135,207,62,0.15)",
+    githubUrl: "https://github.com/Manvikamboz/clusterfuzz",
+    category: "contribution",
+    imageUrl: "/open source project website/clusterFuzz.png",
+    websiteUrl: "https://google.github.io/clusterfuzz/",
+    prStatus: {
+      title: "Fix security-sensitive testcase enumeration in issue redirector by enforcing check_access_and_get_testcase",
+      url: "https://github.com/google/clusterfuzz/pull/5320",
+      state: "open",
+    },
   },
 ];
 
@@ -103,13 +215,29 @@ export const education: Education[] = [
     institution: "Guru Harkrishan Public School",
     detail: "Karnal, Haryana",
     years: "2008–2024",
+    note: "CBSE XII Board: 95.6% | CBSE X Board: 94%",
   },
 ];
 
 export const achievements: Achievement[] = [
-  { badge: "🎓", label: "CBSE Xth Board — 94%" },
-  { badge: "🎓", label: "CBSE XIIth Board — 95.6%" },
-  { badge: "⭐", label: "CGPA — 9.13" },
+  {
+    badge: "🐧",
+    label: "Hosted Linux Fest (Member of FOSS BU)",
+    description: "Co-organized and hosted the Linux Fest at Bennett University as a member of FOSS BU, driving community engagement and managing core events.",
+    images: ["/linux_fest.jpeg", "/linux_fest_photo2.jpeg", "/linux_fest_photo3.jpeg"],
+  },
+  {
+    badge: "🏛️",
+    label: "Research Visit at IIT Delhi",
+    description: "Participated in a research-based visit to IIT Delhi focused on Methane Gas Production & Plantation processes and technologies.",
+    images: ["/iit_delhi_photo1.jpeg", "/iit_delhi_photo2.jpeg", "/iit_delhi_photo3.jpeg"],
+  },
+  {
+    badge: "👁️",
+    label: "Finalist in Deep Sight AI Challenge",
+    description: "Developed deep learning models for high-accuracy video detection and analytics.",
+    images: ["/deep_sight_challenge_photo1.jpeg", "/deep_sight_challenge_photo2.jpeg"],
+  },
 ];
 
 export const contactItems: ContactItem[] = [
@@ -119,12 +247,6 @@ export const contactItems: ContactItem[] = [
     label: "Email",
     value: "kamboj176manvi@gmail.com",
     href: "mailto:kamboj176manvi@gmail.com",
-  },
-  {
-    icon: "fas fa-map-marker-alt",
-    iconColor: "#34a853",
-    label: "Location",
-    value: "Greater Noida, UP",
   },
 ];
 
@@ -140,15 +262,8 @@ export const socialItems: SocialItem[] = [
     icon: "fab fa-linkedin",
     iconColor: "#0A66C2",
     platform: "LinkedIn",
-    handle: "@Manvi Kamboj",
-    href: "https://linkedin.com/in/manvi-kamboj",
-  },
-  {
-    icon: "fab fa-instagram",
-    iconColor: "#E1306C",
-    platform: "Instagram",
-    handle: "@_kizi.e_",
-    href: "https://instagram.com/_kizi.e_",
+    handle: "manvi-kamboj-6ba4a7322",
+    href: "https://www.linkedin.com/in/manvi-kamboj-6ba4a7322",
   },
   {
     icon: "fab fa-x-twitter",
@@ -157,31 +272,35 @@ export const socialItems: SocialItem[] = [
     handle: "@manvi_Kamboj17",
     href: "https://twitter.com/manvi_Kamboj17",
   },
-  {
-    icon: "fab fa-discord",
-    iconColor: "#5865F2",
-    platform: "Discord",
-    handle: "@manvi_Kamboj",
-    href: "#",
-  },
-  {
-    icon: "fas fa-code",
-    iconColor: "#F89C1D",
-    platform: "LeetCode",
-    handle: "@master_17",
-    href: "https://leetcode.com/master_17",
-  },
 ];
 
-export const devMemes: DevMeme[] = [
+export const certifications: Certification[] = [
   {
-    title: "Windows vs Linux",
-    imageUrl: "/meme_linux_windows.png",
-    caption: "The absolute state of developing on Windows at 3 AM versus standard Linux life.",
+    title: "Operating Systems and You: Becoming a Power User",
+    issuer: "Google (Coursera)",
+    date: "Mar 2026",
+    icon: "fas fa-desktop",
+    credentialUrl: "https://coursera.org/verify/NT3JXFAVIKBJ",
   },
   {
-    title: "Stack Overflow Down",
-    imageUrl: "/meme_stackoverflow.png",
-    caption: "When Stack Overflow suffers an outage and GitHub Copilot suddenly starts looking real good.",
+    title: "Design Thinking: Ideas to Action",
+    issuer: "University of Virginia (Coursera)",
+    date: "Feb 2026",
+    icon: "fas fa-lightbulb",
+    credentialUrl: "https://coursera.org/verify/3FTTHZSALXM6",
+  },
+  {
+    title: "Introduction to Cybersecurity Tools & Cyberattacks",
+    issuer: "IBM (Coursera)",
+    date: "Mar 2026",
+    icon: "fas fa-shield-alt",
+    credentialUrl: "https://coursera.org/verify/9ZLPSD2B3M7U",
+  },
+  {
+    title: "The Bits and Bytes of Computer Networking",
+    issuer: "Google (Coursera)",
+    date: "Mar 2026",
+    icon: "fas fa-network-wired",
+    credentialUrl: "https://coursera.org/verify/4BUNR2N019IP",
   },
 ];

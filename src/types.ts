@@ -14,6 +14,14 @@ export interface Project {
   tech: string;
   accentColor: string;
   githubUrl?: string;
+  category?: "creative" | "contribution";
+  imageUrl?: string;
+  websiteUrl?: string;
+  prStatus?: {
+    title: string;
+    url: string;
+    state: "open" | "merged";
+  };
 }
 
 export interface Education {
@@ -26,6 +34,8 @@ export interface Education {
 export interface Achievement {
   badge: string;
   label: string;
+  description?: string;
+  images?: string[];
 }
 
 export interface ContactItem {
@@ -44,8 +54,10 @@ export interface SocialItem {
   href: string;
 }
 
-export interface DevMeme {
+export interface Certification {
   title: string;
-  imageUrl: string;
-  caption: string;
+  issuer: string;
+  date: string;
+  icon: string;
+  credentialUrl?: string;
 }
