@@ -244,7 +244,7 @@ nav {
 }
 
 /* Skills */
-.skills-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem; }
+.skills-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%, 280px),1fr));gap:1.5rem; }
 .skill-card h3 {
   font-size:0.85rem;font-weight:600;color:var(--muted);
   text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1.2rem;
@@ -262,7 +262,7 @@ nav {
 .chip.fw   { border-color:rgba(16,185,129,0.3);color:#10b981; }
 
 /* Projects */
-.projects-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.5rem; }
+.projects-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%, 310px),1fr));gap:1.5rem; }
 .project-card {
   position:relative;overflow:hidden; text-decoration:none;
   display: flex; flex-direction: column; padding: 0 !important;
@@ -443,7 +443,7 @@ nav {
 /* Certifications */
 .certifications-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: 1.5rem;
 }
 .cert-card {
@@ -509,7 +509,7 @@ nav {
 }
 
 /* Contact */
-.contact-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem; }
+.contact-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%, 220px),1fr));gap:1rem; }
 .contact-item {
   display:flex;align-items:center;gap:0.8rem;padding:1rem;
   background:var(--surface);border:1px solid var(--border);
@@ -814,4 +814,23 @@ footer {
   filter: blur(32px);
   opacity: 0.3;
   background: linear-gradient(-30deg, var(--electric-light-color), transparent, var(--electric-border-color));
+}
+
+/* Mobile Optimization & Responsive Typography */
+@media (max-width: 768px) {
+  h1 { font-size: 2.2rem !important; }
+  h2 { font-size: 1.8rem !important; }
+  .hero-role { font-size: 1.2rem !important; }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.8rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  .hero-role { font-size: 1.1rem !important; }
+  .section { padding: 2.5rem 1rem !important; }
+  .card, .featured-project-card { padding: 1.2rem !important; }
+  .hero-btns { flex-direction: column; width: 100%; gap: 0.8rem; }
+  .hero-btns .btn { width: 100%; justify-content: center; }
+  .featured-actions { flex-direction: column; width: 100%; gap: 0.8rem; }
+  .featured-actions .btn { width: 100%; justify-content: center; }
 }
