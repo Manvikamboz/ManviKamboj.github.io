@@ -620,15 +620,47 @@ footer {
 /* Featured Project Spotlight */
 .featured-project-card {
   position: relative;
-  border: 1px solid rgba(124, 58, 237, 0.35) !important;
-  box-shadow: 0 0 20px rgba(124, 58, 237, 0.1) !important;
+  border: none !important;
+  background: var(--surface) !important;
+  box-shadow: 0 0 25px rgba(124, 58, 237, 0.15) !important;
   padding: 2rem !important;
   overflow: hidden;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  z-index: 1;
+  border-radius: 16px;
+  transition: box-shadow 0.3s;
+}
+.featured-project-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent,
+    rgba(124, 58, 237, 0.8), /* startora violet */
+    rgba(0, 245, 212, 0.8),  /* teal */
+    transparent 30%
+  );
+  animation: rotateElectric 4s linear infinite;
+  z-index: -2;
+}
+.featured-project-card::after {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  background: var(--surface);
+  border-radius: 15px;
+  z-index: -1;
+  transition: background 0.3s;
 }
 .featured-project-card:hover {
-  border-color: rgba(124, 58, 237, 0.6) !important;
-  box-shadow: 0 0 25px rgba(124, 58, 237, 0.2) !important;
+  box-shadow: 0 0 35px rgba(124, 58, 237, 0.3) !important;
+}
+@keyframes rotateElectric {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 .spotlight-badge {
   position: absolute;
