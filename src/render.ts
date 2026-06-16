@@ -71,8 +71,46 @@ export function renderProjects(
     card.style.textDecoration = "none";
     card.style.color = "inherit";
 
-    if (p.prStatus && p.prStatus.state === "merged") {
-      card.classList.add("highlighted-pr-card");
+    const isDogApi = p.name === "Dog API Images";
+    let containerForContent: HTMLElement = card;
+
+    if (isDogApi) {
+      card.classList.add("electric-border");
+      card.style.setProperty("--electric-border-color", "#a78bfa");
+      card.style.borderRadius = "12px";
+      card.style.border = "none";
+      card.style.overflow = "visible";
+
+      // Canvas Container
+      const canvasContainer = el("div", "eb-canvas-container");
+      const canvas = el("canvas", "eb-canvas") as HTMLCanvasElement;
+      canvasContainer.appendChild(canvas);
+      card.appendChild(canvasContainer);
+
+      // Glow Layers
+      const layers = el("div", "eb-layers");
+      layers.appendChild(el("div", "eb-glow-1"));
+      layers.appendChild(el("div", "eb-glow-2"));
+      layers.appendChild(el("div", "eb-background-glow"));
+      card.appendChild(layers);
+
+      // Content Wrapper
+      const ebContent = el("div", "eb-content");
+      ebContent.style.borderRadius = "12px";
+      ebContent.style.height = "100%";
+      ebContent.style.display = "flex";
+      ebContent.style.flexDirection = "column";
+      card.appendChild(ebContent);
+      
+      containerForContent = ebContent;
+
+      setTimeout(() => {
+        setupElectricBorder(card, canvas, "#a78bfa", 1, 0.12, 12);
+      }, 0);
+    } else {
+      if (p.prStatus && p.prStatus.state === "merged") {
+        card.classList.add("highlighted-pr-card");
+      }
     }
 
     // Image preview wrapper
@@ -87,7 +125,7 @@ export function renderProjects(
       img.alt = p.name;
       img.loading = "lazy";
       imgWrapper.appendChild(img);
-      card.appendChild(imgWrapper);
+      containerForContent.appendChild(imgWrapper);
     }
 
     // Card Content Container
@@ -153,7 +191,7 @@ export function renderProjects(
     }
 
     content.appendChild(footer);
-    card.appendChild(content);
+    containerForContent.appendChild(content);
     grid.appendChild(card);
   });
 

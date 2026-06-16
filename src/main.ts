@@ -24,6 +24,7 @@ function qs<T extends HTMLElement>(selector: string): T {
 
 // ─── Render dynamic sections ─────────────────────────────────────────────────
 renderSkills(qs<HTMLElement>("#skills-container"), skills);
+renderLogoLoop(qs<HTMLElement>("#logo-loop-slider-top"), skills);
 renderLogoLoop(qs<HTMLElement>("#logo-loop-slider"), skills);
 
 const startora = projects.find(p => p.name === "Startora Platform");
