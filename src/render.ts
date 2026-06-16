@@ -440,11 +440,6 @@ export function renderFeaturedProject(
 
   // Content Wrapper
   const ebContent = el("div", "eb-content");
-  
-  // Spotlight header badge
-  const spotlightBadge = el("div", "spotlight-badge");
-  spotlightBadge.innerHTML = `<i class="fas fa-star" style="color:#a78bfa"></i> FEATURED SPOTLIGHT`;
-  ebContent.appendChild(spotlightBadge);
 
   const mainRow = el("div", "featured-main-row");
 
