@@ -7,7 +7,7 @@ export interface Skill {
 }
 
 export interface Project {
-  emoji: string;
+  icon: string;
   name: string;
   description: string;
   year: string;
@@ -32,7 +32,7 @@ export interface Education {
 }
 
 export interface Achievement {
-  badge: string;
+  icon: string;
   label: string;
   description?: string;
   images?: string[];

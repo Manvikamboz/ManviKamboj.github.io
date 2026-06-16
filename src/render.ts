@@ -134,7 +134,7 @@ export function renderProjects(
     const header = el("div", "project-card-header");
     const icon = el("div", "project-icon");
     icon.style.background = p.accentColor;
-    icon.textContent = p.emoji;
+    icon.innerHTML = `<i class="${p.icon}"></i>`;
     header.appendChild(icon);
 
     // Title with link icons
@@ -301,7 +301,8 @@ function openImageModal(src: string, alt: string): void {
     const item = el("div", "ach-item");
     
     const header = el("div", "ach-item-header");
-    const badge = el("span", "ach-badge", a.badge);
+    const badge = el("span", "ach-badge");
+    badge.innerHTML = `<i class="${a.icon}" style="color:var(--accent)"></i>`;
     const label = el("span", "ach-label", a.label);
     header.appendChild(badge);
     header.appendChild(label);
@@ -506,7 +507,7 @@ export function renderFeaturedProject(
   const headerRow = el("div", "featured-header-row");
   const icon = el("div", "featured-icon");
   icon.style.background = project.accentColor;
-  icon.textContent = project.emoji;
+  icon.innerHTML = `<i class="${project.icon}"></i>`;
   
   const title = el("h3", "", project.name);
   headerRow.appendChild(icon);

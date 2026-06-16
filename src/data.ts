@@ -31,7 +31,7 @@ export const skills: Skill[] = [
 
 export const projects: Project[] = [
   {
-    emoji: "🏙️",
+    icon: "fas fa-city",
     name: "Git City",
     description:
       "Your GitHub profile visualized as a beautiful 3D pixel art building inside an interactive virtual city.",
@@ -49,7 +49,7 @@ export const projects: Project[] = [
     },
   },
   {
-    emoji: "💪",
+    icon: "fas fa-dumbbell",
     name: "FitMart",
     description:
       "Full-stack MERN fitness e-commerce platform featuring an Admin dashboard, Razorpay payments, workout tracker, gym finder, AI chatbot, and BMI calculators.",
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     },
   },
   {
-    emoji: "🐱",
+    icon: "fas fa-cat",
     name: "Cat Facts",
     description:
       "A fun API and subscription service delivering daily facts about cats.",
@@ -85,7 +85,7 @@ export const projects: Project[] = [
     },
   },
   {
-    emoji: "🐶",
+    icon: "fas fa-dog",
     name: "Dog API Images",
     description:
       "A massive database of dog breed images and database sanitation utilities.",
@@ -103,7 +103,7 @@ export const projects: Project[] = [
     },
   },
   {
-    emoji: "⚡",
+    icon: "fas fa-bolt",
     name: "JAX",
     description:
       "Autograd and XLA for high-performance machine learning research in Python.",
@@ -121,7 +121,7 @@ export const projects: Project[] = [
     },
   },
   {
-    emoji: "🚀",
+    icon: "fas fa-rocket",
     name: "Startora Platform",
     description:
       "A gorgeous launchpad and network directory built using glassmorphic design systems for student founders.",
@@ -134,7 +134,7 @@ export const projects: Project[] = [
     websiteUrl: "https://manvikamboz.github.io/Startora/",
   },
   {
-    emoji: "🧠",
+    icon: "fas fa-robot",
     name: "Last30Days AI Agent Skill",
     description:
       "Autonomous agent skill that researches any query across Reddit, X, YouTube, HN, Polymarket, then synthesizes a grounded summary.",
@@ -152,7 +152,7 @@ export const projects: Project[] = [
     },
   },
   {
-    emoji: "🚗",
+    icon: "fas fa-car",
     name: "EdgeVision ANPR",
     description:
       "An edge-optimized vehicle intelligence system for Automated Number Plate Recognition using lightweight models.",
@@ -163,7 +163,7 @@ export const projects: Project[] = [
     category: "creative",
   },
   {
-    emoji: "🎣",
+    icon: "fas fa-fish",
     name: "Phishing Detection System",
     description:
       "Advanced model-driven classifier built to identify phishing websites and security threats in real-time.",
@@ -174,7 +174,7 @@ export const projects: Project[] = [
     category: "creative",
   },
   {
-    emoji: "☕",
+    icon: "fas fa-coffee",
     name: "Cafe Management System",
     description:
       "A smart administration system designed for cafes to streamline order handling, menu management, and real-time billing.",
@@ -185,7 +185,7 @@ export const projects: Project[] = [
     category: "creative",
   },
   {
-    emoji: "🔍",
+    icon: "fas fa-bug",
     name: "ClusterFuzz",
     description:
       "Scalable fuzzing infrastructure by Google for finding security vulnerabilities and stability bugs in software.",
@@ -221,19 +221,19 @@ export const education: Education[] = [
 
 export const achievements: Achievement[] = [
   {
-    badge: "🐧",
+    icon: "fab fa-linux",
     label: "Hosted Linux Fest (Member of FOSS BU)",
     description: "Co-organized and hosted the Linux Fest at Bennett University as a member of FOSS BU, driving community engagement and managing core events.",
     images: ["/linux_fest.jpeg", "/linux_fest_photo2.jpeg", "/linux_fest_photo3.jpeg"],
   },
   {
-    badge: "🏛️",
+    icon: "fas fa-university",
     label: "Research Visit at IIT Delhi",
     description: "Participated in a research-based visit to IIT Delhi focused on Methane Gas Production & Plantation processes and technologies.",
     images: ["/iit_delhi_photo1.jpeg", "/iit_delhi_photo2.jpeg", "/iit_delhi_photo3.jpeg"],
   },
   {
-    badge: "👁️",
+    icon: "fas fa-eye",
     label: "Finalist in Deep Sight AI Challenge",
     description: "Developed deep learning models for high-accuracy video detection and analytics.",
     images: ["/deep_sight_challenge_photo1.jpeg", "/deep_sight_challenge_photo2.jpeg"],
