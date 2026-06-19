@@ -60,7 +60,18 @@ export function renderProjects(
   category?: "creative" | "contribution"
 ): void {
   const grid = el("div", "projects-grid");
-  const filtered = category ? projects.filter((p) => p.category === category) : projects;
+  let filtered = category ? projects.filter((p) => p.category === category) : projects;
+
+  if (category === "contribution") {
+    filtered = [...filtered].sort((a, b) => {
+      const stateA = a.prStatus?.state || "";
+      const stateB = b.prStatus?.state || "";
+      const order = { merged: 1, open: 2, closed: 3 };
+      const valA = order[stateA as keyof typeof order] || 99;
+      const valB = order[stateB as keyof typeof order] || 99;
+      return valA - valB;
+    }).slice(0, 6);
+  }
 
   filtered.forEach((p) => {
     const targetUrl = p.websiteUrl || p.githubUrl || "#";
