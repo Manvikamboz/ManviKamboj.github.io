@@ -82,10 +82,10 @@ export function renderProjects(
     card.style.textDecoration = "none";
     card.style.color = "inherit";
 
-    const isDogApi = p.name === "Dog API Images";
+    const isMergedPr = p.prStatus?.state === "merged";
     let containerForContent: HTMLElement = card;
 
-    if (isDogApi) {
+    if (isMergedPr) {
       card.classList.add("electric-border");
       card.style.setProperty("--electric-border-color", "#a78bfa");
       card.style.borderRadius = "12px";
@@ -118,10 +118,6 @@ export function renderProjects(
       setTimeout(() => {
         setupElectricBorder(card, canvas, "#a78bfa", 1, 0.12, 12);
       }, 0);
-    } else {
-      if (p.prStatus && p.prStatus.state === "merged") {
-        card.classList.add("highlighted-pr-card");
-      }
     }
 
     // Image preview wrapper
@@ -135,6 +131,16 @@ export function renderProjects(
       img.src = src;
       img.alt = p.name;
       img.loading = "lazy";
+
+      if (p.githubUrl) {
+        imgWrapper.style.cursor = "pointer";
+        imgWrapper.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          window.open(p.githubUrl, "_blank", "noopener");
+        });
+      }
+
       imgWrapper.appendChild(img);
       containerForContent.appendChild(imgWrapper);
     }

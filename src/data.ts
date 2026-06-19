@@ -161,6 +161,7 @@ export const projects: Project[] = [
     accentColor: "rgba(34,197,94,0.15)",
     githubUrl: "https://github.com/Manvikamboz/EdgeVision-ANPR-",
     category: "creative",
+    imageUrl: "/EdgeVission ANPR.png",
   },
   {
     icon: "fas fa-fish",
@@ -193,6 +194,7 @@ export const projects: Project[] = [
     accentColor: "rgba(168,85,247,0.15)",
     githubUrl: "https://github.com/Manvikamboz/ponytail",
     category: "contribution",
+    imageUrl: "/open source project website/ponytail.png",
     websiteUrl: "https://github.com/DietrichGebert/ponytail",
     prStatus: {
       title: "fix: resolve test failure on Node.js < 20.11.0 by using new URL",
