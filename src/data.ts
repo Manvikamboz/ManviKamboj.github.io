@@ -182,7 +182,23 @@ export const projects: Project[] = [
     tech: "JavaScript / HTML5 / CSS3",
     accentColor: "rgba(249,115,22,0.15)",
     githubUrl: "https://github.com/Manvikamboz/Cafe_Managment_System",
-    category: "creative",
+  },
+  {
+    icon: "fab fa-node-js",
+    name: "Ponytail",
+    description:
+      "A minimalist constraint layer and audit tool designed for AI coding agents to prevent over-engineering and encourage clean, simple architecture.",
+    year: "2026",
+    tech: "JavaScript / ESM / Node.js",
+    accentColor: "rgba(168,85,247,0.15)",
+    githubUrl: "https://github.com/Manvikamboz/ponytail",
+    category: "contribution",
+    websiteUrl: "https://github.com/DietrichGebert/ponytail",
+    prStatus: {
+      title: "fix: resolve test failure on Node.js < 20.11.0 by using new URL",
+      url: "https://github.com/DietrichGebert/ponytail/pull/157",
+      state: "merged",
+    },
   },
   {
     icon: "fas fa-bug",
