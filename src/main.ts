@@ -8,37 +8,44 @@ import {
   socialItems,
   certifications,
 } from "./data";
-import { renderSkills, renderProjects, renderEducation, renderContact, renderLogoLoop, renderCertifications, renderFeaturedProject } from "./render";
+import {
+  renderLayout,
+  renderSkills,
+  renderProjects,
+  renderEducation,
+  renderContact,
+  renderLogoLoop,
+  renderCertifications,
+  renderFeaturedProject,
+} from "./render";
 import {
   initScrollReveal,
   initNavHighlight,
   initSmoothScroll,
 } from "./animations";
 
-// ─── Helper ───────────────────────────────────────────────────────────────────
-function qs<T extends HTMLElement>(selector: string): T {
-  const el = document.querySelector<T>(selector);
-  if (!el) throw new Error(`Element not found: ${selector}`);
-  return el;
-}
+// ─── Mount Layout ────────────────────────────────────────────────────────────
+const app = document.getElementById("app");
+if (!app) throw new Error("Root app element not found!");
+
+const containers = renderLayout(app);
 
 // ─── Render dynamic sections ─────────────────────────────────────────────────
-renderSkills(qs<HTMLElement>("#skills-container"), skills);
-renderLogoLoop(qs<HTMLElement>("#logo-loop-slider-top"), skills);
-renderLogoLoop(qs<HTMLElement>("#logo-loop-slider"), skills);
+renderSkills(containers.skillsContainer, skills);
+renderLogoLoop(containers.logoLoopTop, skills);
+renderLogoLoop(containers.logoLoopBottom, skills);
 
 const startora = projects.find(p => p.name === "Startora Platform");
 if (startora) {
-  renderFeaturedProject(qs<HTMLElement>("#featured-project-container"), startora);
+  renderFeaturedProject(containers.featuredContainer, startora);
 }
 
 const otherProjects = projects.filter(p => p.name !== "Startora Platform");
-renderProjects(qs<HTMLElement>("#creative-projects-container"), otherProjects, "creative");
-renderProjects(qs<HTMLElement>("#contribution-projects-container"), otherProjects, "contribution");
-renderEducation(qs<HTMLElement>("#education-container"), education, achievements);
-renderCertifications(qs<HTMLElement>("#certifications-container"), certifications);
-renderContact(qs<HTMLElement>("#contact-container"), contactItems, socialItems);
-
+renderProjects(containers.creativeContainer, otherProjects, "creative");
+renderProjects(containers.contributionContainer, otherProjects, "contribution");
+renderEducation(containers.educationContainer, education, achievements);
+renderCertifications(containers.certificationsContainer, certifications);
+renderContact(containers.contactContainer, contactItems, socialItems);
 
 // ─── Animations & interactivity ──────────────────────────────────────────────
 initScrollReveal();
