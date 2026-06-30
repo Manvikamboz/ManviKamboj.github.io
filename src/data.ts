@@ -173,6 +173,19 @@ export const projects: Project[] = [
     accentColor: "rgba(239,68,68,0.15)",
     githubUrl: "https://github.com/Manvikamboz/phishing-detection",
     category: "creative",
+    imageUrl: "/open source project website/phishing Detection System.png",
+  },
+  {
+    icon: "fas fa-shield-halved",
+    name: "CommunityHero",
+    description:
+      "A hyperlocal civic action platform for reporting municipal issues with auto-categorization via Gemini AI Vision and GeoJSON routing.",
+    year: "2026",
+    tech: "TypeScript / React / Gemini AI / GeoJSON",
+    accentColor: "rgba(59,130,246,0.15)",
+    githubUrl: "https://github.com/Manvikamboz/community-hero",
+    category: "creative",
+    imageUrl: "/common hero.png",
   },
   {
     icon: "fas fa-coffee",
