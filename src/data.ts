@@ -186,6 +186,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Manvikamboz/community-hero",
     category: "creative",
     imageUrl: "/common hero.png",
+    imageRedirectUrl: "https://common-hero.vercel.app/",
   },
   {
     icon: "fas fa-coffee",

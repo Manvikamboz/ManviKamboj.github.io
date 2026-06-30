@@ -17,6 +17,7 @@ export interface Project {
   category?: "creative" | "contribution";
   imageUrl?: string;
   websiteUrl?: string;
+  imageRedirectUrl?: string;
   prStatus?: {
     title: string;
     url: string;

@@ -132,12 +132,13 @@ export function renderProjects(
       img.alt = p.name;
       img.loading = "lazy";
 
-      if (p.githubUrl) {
+      const redirectUrl = p.imageRedirectUrl || p.githubUrl;
+      if (redirectUrl) {
         imgWrapper.style.cursor = "pointer";
         imgWrapper.addEventListener("click", (e) => {
           e.preventDefault();
           e.stopPropagation();
-          window.open(p.githubUrl, "_blank", "noopener");
+          window.open(redirectUrl, "_blank", "noopener");
         });
       }
 
